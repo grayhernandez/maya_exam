@@ -1,28 +1,31 @@
 import 'package:flutter/material.dart';
-import 'presentation/pages/home_page.dart';
-import 'presentation/pages/login_page.dart';
-import 'presentation/pages/send_money_page.dart';
-import 'presentation/pages/transactions_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'presentation/login/login_cubit.dart';
+import 'presentation/login/login_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MayaApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MayaApp extends StatelessWidget {
+  const MayaApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Send Money App',
-      theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => LoginPage(),
-        '/home': (context) => const HomePage(),
-        '/send-money': (context) => const SendMoneyPage(),
-        '/transactions': (context) => const TransactionsPage(),
-      },
+    return BlocProvider(
+      create: (_) => LoginCubit(),
+      child: MaterialApp(
+        title: 'Send Money',
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/',
+        routes: {
+          '/': (_) => const LoginScreen(),
+        },
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
+          useMaterial3: true,
+        ),
+      ),
     );
   }
 }
